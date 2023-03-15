@@ -35,7 +35,7 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
     final options = Platform.isAndroid ? androidNotificationOptions.toJson() : iosNotificationOptions.toJson();
     options['notificationContentTitle'] = notificationTitle;
     options['notificationContentText'] = notificationText;
-    options['largeIconPath'] = largeIconPath;
+    options['notificationLargeIconPath'] = largeIconPath;
     if (callback != null) {
       options.addAll(foregroundTaskOptions.toJson());
       options['callbackHandle'] = PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
@@ -85,7 +85,7 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
       final options = <String, dynamic>{
         'notificationContentTitle': notificationTitle,
         'notificationContentText': notificationText,
-        'largeIconPath': largeIconPath,
+        'notificationLargeIconPath': largeIconPath,
       };
       if (callback != null) {
         options['callbackHandle'] = PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
