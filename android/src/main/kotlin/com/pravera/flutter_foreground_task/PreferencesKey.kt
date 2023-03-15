@@ -20,6 +20,7 @@ object PreferencesKey {
     const val NOTIFICATION_PRIORITY = "notificationPriority"
     const val NOTIFICATION_CONTENT_TITLE = "notificationContentTitle"
     const val NOTIFICATION_CONTENT_TEXT = "notificationContentText"
+    const val NOTIFICATION_LARGE_ICON_PATH = "notificationLargeIconPath"
     const val ENABLE_VIBRATION = "enableVibration"
     const val PLAY_SOUND = "playSound"
     const val SHOW_WHEN = "showWhen"
