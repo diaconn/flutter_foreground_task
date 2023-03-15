@@ -23,25 +23,25 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
     required ForegroundTaskOptions foregroundTaskOptions,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     Function? callback,
   }) async {
     if (await isRunningService) {
       return true;
     }
 
-    final options = Platform.isAndroid
-        ? androidNotificationOptions.toJson()
-        : iosNotificationOptions.toJson();
+    final options = Platform.isAndroid ? androidNotificationOptions.toJson() : iosNotificationOptions.toJson();
     options['notificationContentTitle'] = notificationTitle;
     options['notificationContentText'] = notificationText;
+    options['largeIconPath'] = largeIconPath;
     if (callback != null) {
       options.addAll(foregroundTaskOptions.toJson());
-      options['callbackHandle'] =
-          PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
+      options['callbackHandle'] = PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
     }
 
-    final bool reqResult =
-        await methodChannel.invokeMethod('startService', options);
+    final bool reqResult = await methodChannel.invokeMethod('startService', options);
     if (!reqResult) {
       return false;
     }
@@ -76,16 +76,19 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
   Future<bool> updateService({
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     Function? callback,
   }) async {
     if (await isRunningService) {
       final options = <String, dynamic>{
         'notificationContentTitle': notificationTitle,
         'notificationContentText': notificationText,
+        'largeIconPath': largeIconPath,
       };
       if (callback != null) {
-        options['callbackHandle'] =
-            PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
+        options['callbackHandle'] = PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
       }
       return await methodChannel.invokeMethod('updateService', options);
     }
@@ -168,8 +171,7 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
   @override
   Future<bool> openIgnoreBatteryOptimizationSettings() async {
     if (Platform.isAndroid) {
-      return await methodChannel
-          .invokeMethod('openIgnoreBatteryOptimizationSettings');
+      return await methodChannel.invokeMethod('openIgnoreBatteryOptimizationSettings');
     }
     return true;
   }
@@ -177,8 +179,7 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
   @override
   Future<bool> requestIgnoreBatteryOptimization() async {
     if (Platform.isAndroid) {
-      return await methodChannel
-          .invokeMethod('requestIgnoreBatteryOptimization');
+      return await methodChannel.invokeMethod('requestIgnoreBatteryOptimization');
     }
     return true;
   }
