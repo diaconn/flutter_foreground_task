@@ -5,7 +5,7 @@ import android.app.*
 import android.content.*
 import android.content.pm.PackageManager
 /* 디아콘 추가 시작 */
-import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory
 /* 디아콘 추가 끝 */
 import android.graphics.Color
 import android.net.wifi.WifiManager
@@ -211,8 +211,8 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 			builder.setShowWhen(notificationOptions.showWhen)
 			builder.setSmallIcon(iconResId)
 			/* 디아콘 추가 시작 */
-			if (NotificationOptions.largeIconPath?.isNotEmpty() ?: false) {
-				builder.setLargeIcon(BitmapFactory.decodeFile(NotificationOptions.largeIconPath))
+			if (notificationOptions.largeIconPath.isNotEmpty()) {
+				builder.setLargeIcon(BitmapFactory.decodeFile(notificationOptions.largeIconPath))
 			}
 			/* 디아콘 추가 끝 */
 			builder.setContentIntent(pendingIntent)
@@ -235,8 +235,8 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 			builder.setShowWhen(notificationOptions.showWhen)
 			builder.setSmallIcon(iconResId)
 			/* 디아콘 추가 시작 */
-			if (NotificationOptions.largeIconPath?.isNotEmpty() ?: false) {
-				builder.setLargeIcon(BitmapFactory.decodeFile(NotificationOptions.largeIconPath))
+			if (notificationOptions.largeIconPath.isNotEmpty()) {
+				builder.setLargeIcon(BitmapFactory.decodeFile(notificationOptions.largeIconPath))
 			}
 			/* 디아콘 추가 끝 */
 			builder.setContentIntent(pendingIntent)
