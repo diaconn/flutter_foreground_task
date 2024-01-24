@@ -126,9 +126,10 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 		if (foregroundServiceStatus.action != ForegroundServiceAction.STOP) {
 			if (isSetStopWithTaskFlag()) {
 				/* 디아콘 추가 시작 */
-				SystemClock.sleep(1000)
+				Handler(Looper.getMainLooper()).postDelayed({
+					exitProcess(0)
+				}, 1000)
 				/* 디아콘 추가 끝 */
-				exitProcess(0)
 			} else {
 				Log.i(TAG, "The foreground service was terminated due to an unexpected problem.")
 				if (notificationOptions.isSticky) {
