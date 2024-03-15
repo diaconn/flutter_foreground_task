@@ -213,19 +213,18 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 
 		// Create a notification and start the foreground service.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			val nm = getSystemService(NotificationManager::class.java)
-			if (nm.getNotificationChannel(channelId) == null) {
-				val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
-					if (channelDesc != null) {
-						description = channelDesc
-					}
-					enableVibration(notificationOptions.enableVibration)
-					if (!notificationOptions.playSound) {
-						setSound(null, null)
-					}
-				}
-				nm.createNotificationChannel(channel)
+			val channel = NotificationChannel(
+					notificationOptions.channelId,
+					notificationOptions.channelName,
+					notificationOptions.channelImportance
+			)
+			channel.description = notificationOptions.channelDescription
+			channel.enableVibration(notificationOptions.enableVibration)
+			if (!notificationOptions.playSound) {
+				channel.setSound(null, null)
 			}
+			val nm = getSystemService(NotificationManager::class.java)
+			nm.createNotificationChannel(channel)
 
 			val builder = Notification.Builder(this, channelId)
 			builder.setOngoing(true)
