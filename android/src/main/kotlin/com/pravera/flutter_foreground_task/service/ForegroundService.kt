@@ -5,6 +5,9 @@ import android.app.*
 import android.content.*
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
+/* 디아콘 추가 시작 */
+import android.graphics.BitmapFactory
+/* 디아콘 추가 끝 */
 import android.graphics.Color
 import android.net.wifi.WifiManager
 import android.os.*
@@ -137,7 +140,11 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 		unregisterBroadcastReceiver()
 		if (foregroundServiceStatus.action != ForegroundServiceAction.STOP) {
 			if (isSetStopWithTaskFlag()) {
-				exitProcess(0)
+				/* 디아콘 추가 시작 */
+				Handler(Looper.getMainLooper()).postDelayed({
+					exitProcess(0)
+				}, 1000)
+				/* 디아콘 추가 끝 */
 			} else {
 				Log.i(TAG, "The foreground service was terminated due to an unexpected problem.")
 				if (notificationOptions.isSticky) {
@@ -211,24 +218,28 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 
 		// Create a notification and start the foreground service.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			val nm = getSystemService(NotificationManager::class.java)
-			if (nm.getNotificationChannel(channelId) == null) {
-				val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
-					if (channelDesc != null) {
-						description = channelDesc
-					}
-					enableVibration(notificationOptions.enableVibration)
-					if (!notificationOptions.playSound) {
-						setSound(null, null)
-					}
-				}
-				nm.createNotificationChannel(channel)
+			val channel = NotificationChannel(
+					notificationOptions.channelId,
+					notificationOptions.channelName,
+					notificationOptions.channelImportance
+			)
+			channel.description = notificationOptions.channelDescription
+			channel.enableVibration(notificationOptions.enableVibration)
+			if (!notificationOptions.playSound) {
+				channel.setSound(null, null)
 			}
+			val nm = getSystemService(NotificationManager::class.java)
+			nm.createNotificationChannel(channel)
 
 			val builder = Notification.Builder(this, channelId)
 			builder.setOngoing(true)
 			builder.setShowWhen(notificationOptions.showWhen)
 			builder.setSmallIcon(iconResId)
+			/* 디아콘 추가 시작 */
+			if (notificationOptions.largeIconPath.isNotEmpty()) {
+				builder.setLargeIcon(BitmapFactory.decodeFile(notificationOptions.largeIconPath))
+			}
+			/* 디아콘 추가 끝 */
 			builder.setContentIntent(pendingIntent)
 			builder.setContentTitle(notificationOptions.contentTitle)
 			builder.setContentText(notificationOptions.contentText)
@@ -258,6 +269,11 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 			builder.setOngoing(true)
 			builder.setShowWhen(notificationOptions.showWhen)
 			builder.setSmallIcon(iconResId)
+			/* 디아콘 추가 시작 */
+			if (notificationOptions.largeIconPath.isNotEmpty()) {
+				builder.setLargeIcon(BitmapFactory.decodeFile(notificationOptions.largeIconPath))
+			}
+			/* 디아콘 추가 끝 */
 			builder.setContentIntent(pendingIntent)
 			builder.setContentTitle(notificationOptions.contentTitle)
 			builder.setContentText(notificationOptions.contentText)
