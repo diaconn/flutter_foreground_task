@@ -12,8 +12,7 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FlutterForegroundTaskPlatform _instance =
-      MethodChannelFlutterForegroundTask();
+  static FlutterForegroundTaskPlatform _instance = MethodChannelFlutterForegroundTask();
 
   /// The default instance of [FlutterForegroundTaskPlatform] to use.
   ///
@@ -34,6 +33,9 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
     required ForegroundTaskOptions foregroundTaskOptions,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     Function? callback,
   }) {
     throw UnimplementedError('startService() has not been implemented.');
@@ -47,6 +49,9 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
     ForegroundTaskOptions? foregroundTaskOptions,
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     Function? callback,
   }) {
     throw UnimplementedError('updateService() has not been implemented.');
@@ -73,8 +78,7 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
   }
 
   void setOnLockScreenVisibility(bool isVisible) {
-    throw UnimplementedError(
-        'setOnLockScreenVisibility has not been implemented.');
+    throw UnimplementedError('setOnLockScreenVisibility has not been implemented.');
   }
 
   Future<bool> get isAppOnForeground {
@@ -86,18 +90,15 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
   }
 
   Future<bool> get isIgnoringBatteryOptimizations {
-    throw UnimplementedError(
-        'isIgnoringBatteryOptimizations has not been implemented.');
+    throw UnimplementedError('isIgnoringBatteryOptimizations has not been implemented.');
   }
 
   Future<bool> openIgnoreBatteryOptimizationSettings() {
-    throw UnimplementedError(
-        'openIgnoreBatteryOptimizationSettings has not been implemented.');
+    throw UnimplementedError('openIgnoreBatteryOptimizationSettings has not been implemented.');
   }
 
   Future<bool> requestIgnoreBatteryOptimization() {
-    throw UnimplementedError(
-        'requestIgnoreBatteryOptimization has not been implemented.');
+    throw UnimplementedError('requestIgnoreBatteryOptimization has not been implemented.');
   }
 
   Future<bool> get canDrawOverlays {
@@ -105,17 +106,14 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
   }
 
   Future<bool> openSystemAlertWindowSettings({bool forceOpen = false}) {
-    throw UnimplementedError(
-        'openSystemAlertWindowSettings has not been implemented.');
+    throw UnimplementedError('openSystemAlertWindowSettings has not been implemented.');
   }
 
   Future<NotificationPermission> checkNotificationPermission() {
-    throw UnimplementedError(
-        'checkNotificationPermission() has not been implemented.');
+    throw UnimplementedError('checkNotificationPermission() has not been implemented.');
   }
 
   Future<NotificationPermission> requestNotificationPermission() {
-    throw UnimplementedError(
-        'requestNotificationPermission() has not been implemented.');
+    throw UnimplementedError('requestNotificationPermission() has not been implemented.');
   }
 }

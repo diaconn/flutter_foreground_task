@@ -14,6 +14,7 @@ data class NotificationOptions(
     val priority: Int,
     val contentTitle: String,
     val contentText: String,
+    val largeIconPath: String,
     val enableVibration: Boolean,
     val playSound: Boolean,
     val showWhen: Boolean,
@@ -35,6 +36,7 @@ data class NotificationOptions(
             val priority = prefs.getInt(PrefsKey.NOTIFICATION_PRIORITY, 0)
             val contentTitle = prefs.getString(PrefsKey.NOTIFICATION_CONTENT_TITLE, null) ?: ""
             val contentText = prefs.getString(PrefsKey.NOTIFICATION_CONTENT_TEXT, null) ?: ""
+            val largeIconPath = prefs.getString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, null) ?: ""
             val enableVibration = prefs.getBoolean(PrefsKey.ENABLE_VIBRATION, false)
             val playSound = prefs.getBoolean(PrefsKey.PLAY_SOUND, false)
             val showWhen = prefs.getBoolean(PrefsKey.SHOW_WHEN, false)
@@ -78,6 +80,7 @@ data class NotificationOptions(
                 priority = priority,
                 contentTitle = contentTitle,
                 contentText = contentText,
+                largeIconPath = largeIconPath,
                 enableVibration = enableVibration,
                 playSound = playSound,
                 showWhen = showWhen,
@@ -100,6 +103,7 @@ data class NotificationOptions(
             val priority = map?.get(PrefsKey.NOTIFICATION_PRIORITY) as? Int ?: 0
             val contentTitle = map?.get(PrefsKey.NOTIFICATION_CONTENT_TITLE) as? String ?: ""
             val contentText = map?.get(PrefsKey.NOTIFICATION_CONTENT_TEXT) as? String ?: ""
+            val largeIconPath = map?.get(PrefsKey.NOTIFICATION_LARGE_ICON_PATH) as? String ?: ""
             val enableVibration = map?.get(PrefsKey.ENABLE_VIBRATION) as? Boolean ?: false
             val playSound = map?.get(PrefsKey.PLAY_SOUND) as? Boolean ?: false
             val showWhen = map?.get(PrefsKey.SHOW_WHEN) as? Boolean ?: false
@@ -127,6 +131,7 @@ data class NotificationOptions(
                 putInt(PrefsKey.NOTIFICATION_PRIORITY, priority)
                 putString(PrefsKey.NOTIFICATION_CONTENT_TITLE, contentTitle)
                 putString(PrefsKey.NOTIFICATION_CONTENT_TEXT, contentText)
+                putString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, largeIconPath)
                 putBoolean(PrefsKey.ENABLE_VIBRATION, enableVibration)
                 putBoolean(PrefsKey.PLAY_SOUND, playSound)
                 putBoolean(PrefsKey.SHOW_WHEN, showWhen)
@@ -148,10 +153,14 @@ data class NotificationOptions(
             val contentText = map?.get(PrefsKey.NOTIFICATION_CONTENT_TEXT) as? String
                 ?: prefs.getString(PrefsKey.NOTIFICATION_CONTENT_TEXT, null)
                 ?: ""
+            val largeIconPath = map?.get(PrefsKey.NOTIFICATION_LARGE_ICON_PATH) as? String
+                ?: prefs.getString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, null)
+                ?: ""
 
             with(prefs.edit()) {
                 putString(PrefsKey.NOTIFICATION_CONTENT_TITLE, contentTitle)
                 putString(PrefsKey.NOTIFICATION_CONTENT_TEXT, contentText)
+                putString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, largeIconPath)
                 commit()
             }
         }
