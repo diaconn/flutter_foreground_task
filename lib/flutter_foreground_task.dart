@@ -5,11 +5,11 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'flutter_foreground_task_platform_interface.dart';
 import 'errors/service_already_started_exception.dart';
 import 'errors/service_not_initialized_exception.dart';
 import 'errors/service_not_started_exception.dart';
 import 'errors/service_timeout_exception.dart';
+import 'flutter_foreground_task_platform_interface.dart';
 import 'models/android_notification_options.dart';
 import 'models/foreground_task_options.dart';
 import 'models/ios_notification_options.dart';
@@ -34,8 +34,8 @@ export 'models/notification_permission.dart';
 export 'models/notification_priority.dart';
 export 'models/notification_visibility.dart';
 export 'models/service_request_result.dart';
-export 'ui/with_foreground_task.dart';
 export 'task_handler.dart';
+export 'ui/with_foreground_task.dart';
 
 const String _kPortName = 'flutter_foreground_task/isolateComPort';
 const String _kPrefsKeyPrefix = 'com.pravera.flutter_foreground_task.prefs.';
@@ -62,8 +62,7 @@ class FlutterForegroundTask {
   static bool skipServiceResponseCheck = false;
 
   // platform instance: MethodChannelFlutterForegroundTask
-  static FlutterForegroundTaskPlatform get _platform =>
-      FlutterForegroundTaskPlatform.instance;
+  static FlutterForegroundTaskPlatform get _platform => FlutterForegroundTaskPlatform.instance;
 
   /// Resets class's static values to allow for testing of service flow.
   @visibleForTesting
@@ -87,8 +86,7 @@ class FlutterForegroundTask {
     required IOSNotificationOptions iosNotificationOptions,
     required ForegroundTaskOptions foregroundTaskOptions,
   }) {
-    FlutterForegroundTask.androidNotificationOptions =
-        androidNotificationOptions;
+    FlutterForegroundTask.androidNotificationOptions = androidNotificationOptions;
     FlutterForegroundTask.iosNotificationOptions = iosNotificationOptions;
     FlutterForegroundTask.foregroundTaskOptions = foregroundTaskOptions;
     FlutterForegroundTask.isInitialized = true;
@@ -99,6 +97,9 @@ class FlutterForegroundTask {
     int? serviceId,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIconData? notificationIcon,
     List<NotificationButton>? notificationButtons,
     Function? callback,
@@ -119,6 +120,7 @@ class FlutterForegroundTask {
         serviceId: serviceId,
         notificationTitle: notificationTitle,
         notificationText: notificationText,
+        largeIconPath: largeIconPath,
         notificationIcon: notificationIcon,
         notificationButtons: notificationButtons,
         callback: callback,
@@ -172,6 +174,9 @@ class FlutterForegroundTask {
     ForegroundTaskOptions? foregroundTaskOptions,
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIconData? notificationIcon,
     List<NotificationButton>? notificationButtons,
     Function? callback,
@@ -185,6 +190,7 @@ class FlutterForegroundTask {
         foregroundTaskOptions: foregroundTaskOptions,
         notificationText: notificationText,
         notificationTitle: notificationTitle,
+        largeIconPath: largeIconPath,
         notificationIcon: notificationIcon,
         notificationButtons: notificationButtons,
         callback: callback,
@@ -239,8 +245,7 @@ class FlutterForegroundTask {
   /// Set up the task handler and start the foreground task.
   ///
   /// It must always be called from a top-level function, otherwise foreground task will not work.
-  static void setTaskHandler(TaskHandler handler) =>
-      _platform.setTaskHandler(handler);
+  static void setTaskHandler(TaskHandler handler) => _platform.setTaskHandler(handler);
 
   // =================== Communication ===================
 
@@ -377,8 +382,7 @@ class FlutterForegroundTask {
   static void launchApp([String? route]) => _platform.launchApp(route);
 
   /// Toggles lockScreen visibility.
-  static void setOnLockScreenVisibility(bool isVisible) =>
-      _platform.setOnLockScreenVisibility(isVisible);
+  static void setOnLockScreenVisibility(bool isVisible) => _platform.setOnLockScreenVisibility(isVisible);
 
   /// Returns whether the app is in the foreground.
   static Future<bool> get isAppOnForeground => _platform.isAppOnForeground;
@@ -387,37 +391,30 @@ class FlutterForegroundTask {
   static void wakeUpScreen() => _platform.wakeUpScreen();
 
   /// Returns whether the app has been excluded from battery optimization.
-  static Future<bool> get isIgnoringBatteryOptimizations =>
-      _platform.isIgnoringBatteryOptimizations;
+  static Future<bool> get isIgnoringBatteryOptimizations => _platform.isIgnoringBatteryOptimizations;
 
   /// Open the settings page where you can set ignore battery optimization.
-  static Future<bool> openIgnoreBatteryOptimizationSettings() =>
-      _platform.openIgnoreBatteryOptimizationSettings();
+  static Future<bool> openIgnoreBatteryOptimizationSettings() => _platform.openIgnoreBatteryOptimizationSettings();
 
   /// Request to ignore battery optimization.
   ///
   /// This function requires "android.permission.REQUEST\_IGNORE\_BATTERY\_OPTIMIZATIONS" permission.
-  static Future<bool> requestIgnoreBatteryOptimization() =>
-      _platform.requestIgnoreBatteryOptimization();
+  static Future<bool> requestIgnoreBatteryOptimization() => _platform.requestIgnoreBatteryOptimization();
 
   /// Returns whether the "android.permission.SYSTEM\_ALERT\_WINDOW" permission is granted.
   static Future<bool> get canDrawOverlays => _platform.canDrawOverlays;
 
   /// Open the settings page where you can allow/deny the "android.permission.SYSTEM\_ALERT\_WINDOW" permission.
-  static Future<bool> openSystemAlertWindowSettings() =>
-      _platform.openSystemAlertWindowSettings();
+  static Future<bool> openSystemAlertWindowSettings() => _platform.openSystemAlertWindowSettings();
 
   /// Returns notification permission status.
-  static Future<NotificationPermission> checkNotificationPermission() =>
-      _platform.checkNotificationPermission();
+  static Future<NotificationPermission> checkNotificationPermission() => _platform.checkNotificationPermission();
 
   /// Request notification permission.
-  static Future<NotificationPermission> requestNotificationPermission() =>
-      _platform.requestNotificationPermission();
+  static Future<NotificationPermission> requestNotificationPermission() => _platform.requestNotificationPermission();
 
   /// Returns whether the "android.permission.SCHEDULE\_EXACT\_ALARM" permission is granted.
-  static Future<bool> get canScheduleExactAlarms =>
-      _platform.canScheduleExactAlarms;
+  static Future<bool> get canScheduleExactAlarms => _platform.canScheduleExactAlarms;
 
   /// Open the alarms & reminders settings page.
   ///
@@ -426,6 +423,5 @@ class FlutterForegroundTask {
   ///
   /// This utility requires the "android.permission.SCHEDULE\_EXACT\_ALARM" permission.
   /// Using this permission may make app distribution difficult due to Google policy.
-  static Future<bool> openAlarmsAndRemindersSettings() =>
-      _platform.openAlarmsAndRemindersSettings();
+  static Future<bool> openAlarmsAndRemindersSettings() => _platform.openAlarmsAndRemindersSettings();
 }

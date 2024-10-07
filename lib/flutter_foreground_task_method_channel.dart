@@ -19,12 +19,10 @@ import 'task_handler.dart';
 /// An implementation of [FlutterForegroundTaskPlatform] that uses method channels.
 class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
   @visibleForTesting
-  final MethodChannel mMDChannel =
-      const MethodChannel('flutter_foreground_task/methods');
+  final MethodChannel mMDChannel = const MethodChannel('flutter_foreground_task/methods');
 
   @visibleForTesting
-  final MethodChannel mBGChannel =
-      const MethodChannel('flutter_foreground_task/background');
+  final MethodChannel mBGChannel = const MethodChannel('flutter_foreground_task/background');
 
   @visibleForTesting
   Platform platform = const LocalPlatform();
@@ -39,26 +37,26 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
     int? serviceId,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIconData? notificationIcon,
     List<NotificationButton>? notificationButtons,
     Function? callback,
   }) async {
     final Map<String, dynamic> options = {
       'serviceId': serviceId,
-      if (platform.isAndroid)
-        ...androidNotificationOptions.toJson()
-      else if (platform.isIOS)
-        ...iosNotificationOptions.toJson(),
+      if (platform.isAndroid) ...androidNotificationOptions.toJson() else if (platform.isIOS) ...iosNotificationOptions.toJson(),
       ...foregroundTaskOptions.toJson(),
       'notificationContentTitle': notificationTitle,
       'notificationContentText': notificationText,
+      'notificationLargeIconPath': largeIconPath,
       'iconData': notificationIcon?.toJson(),
-      'buttons': notificationButtons?.map((e) => e.toJson()).toList()
+      'buttons': notificationButtons?.map((e) => e.toJson()).toList(),
     };
 
     if (callback != null) {
-      options['callbackHandle'] =
-          PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
+      options['callbackHandle'] = PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
     }
 
     await mMDChannel.invokeMethod('startService', options);
@@ -74,6 +72,9 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
     ForegroundTaskOptions? foregroundTaskOptions,
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIconData? notificationIcon,
     List<NotificationButton>? notificationButtons,
     Function? callback,
@@ -82,13 +83,13 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
       if (foregroundTaskOptions != null) ...foregroundTaskOptions.toJson(),
       'notificationContentTitle': notificationTitle,
       'notificationContentText': notificationText,
+      'notificationLargeIconPath': largeIconPath,
       'iconData': notificationIcon?.toJson(),
-      'buttons': notificationButtons?.map((e) => e.toJson()).toList()
+      'buttons': notificationButtons?.map((e) => e.toJson()).toList(),
     };
 
     if (callback != null) {
-      options['callbackHandle'] =
-          PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
+      options['callbackHandle'] = PluginUtilities.getCallbackHandle(callback)?.toRawHandle();
     }
 
     await mMDChannel.invokeMethod('updateService', options);
@@ -218,8 +219,7 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
   @override
   Future<bool> openIgnoreBatteryOptimizationSettings() async {
     if (platform.isAndroid) {
-      return await mMDChannel
-          .invokeMethod('openIgnoreBatteryOptimizationSettings');
+      return await mMDChannel.invokeMethod('openIgnoreBatteryOptimizationSettings');
     }
     return true;
   }
@@ -250,15 +250,13 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
 
   @override
   Future<NotificationPermission> checkNotificationPermission() async {
-    final int result =
-        await mMDChannel.invokeMethod('checkNotificationPermission');
+    final int result = await mMDChannel.invokeMethod('checkNotificationPermission');
     return NotificationPermission.fromIndex(result);
   }
 
   @override
   Future<NotificationPermission> requestNotificationPermission() async {
-    final int result =
-        await mMDChannel.invokeMethod('requestNotificationPermission');
+    final int result = await mMDChannel.invokeMethod('requestNotificationPermission');
     return NotificationPermission.fromIndex(result);
   }
 

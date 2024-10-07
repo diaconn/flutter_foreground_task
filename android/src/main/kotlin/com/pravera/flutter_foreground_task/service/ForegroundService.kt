@@ -23,6 +23,9 @@ import com.pravera.flutter_foreground_task.utils.ForegroundServiceUtils
 import com.pravera.flutter_foreground_task.utils.PluginUtils
 import kotlinx.coroutines.*
 import java.util.*
+/* 디아콘 추가 시작 */
+import android.graphics.BitmapFactory
+/* 디아콘 추가 끝 */
 
 /**
  * A service class for implementing foreground service.
@@ -320,6 +323,11 @@ class ForegroundService : Service() {
             builder.setContentIntent(pendingIntent)
             builder.setContentTitle(notificationContent.title)
             builder.setContentText(notificationContent.text)
+            /* 디아콘 추가 시작 */
+            if (notificationContent.largeIconPath.isNotEmpty()) {
+                builder.setLargeIcon(BitmapFactory.decodeFile(notificationContent.largeIconPath))
+            }
+            /* 디아콘 추가 끝 */
             builder.style = Notification.BigTextStyle()
             builder.setVisibility(notificationOptions.visibility)
             if (iconBackgroundColor != null) {
@@ -346,6 +354,11 @@ class ForegroundService : Service() {
             builder.setContentIntent(pendingIntent)
             builder.setContentTitle(notificationContent.title)
             builder.setContentText(notificationContent.text)
+            /* 디아콘 추가 시작 */
+            if (notificationContent.largeIconPath.isNotEmpty()) {
+                builder.setLargeIcon(BitmapFactory.decodeFile(notificationContent.largeIconPath))
+            }
+            /* 디아콘 추가 끝 */
             builder.setStyle(NotificationCompat.BigTextStyle().bigText(notificationContent.text))
             builder.setVisibility(notificationOptions.visibility)
             if (iconBackgroundColor != null) {

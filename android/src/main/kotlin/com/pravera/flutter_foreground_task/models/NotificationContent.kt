@@ -8,6 +8,7 @@ import org.json.JSONObject
 data class NotificationContent(
     val title: String,
     val text: String,
+    val largeIconPath: String,
     val icon: NotificationIconData?,
     val buttons: List<NotificationButton>
 ) {
@@ -25,6 +26,8 @@ data class NotificationContent(
                 icon = NotificationIconData.fromJsonString(iconJsonString)
             }
 
+            val largeIconPath = prefs.getString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, null) ?: ""
+
             val buttonsJsonString = prefs.getString(PrefsKey.NOTIFICATION_CONTENT_BUTTONS, null)
             val buttons: MutableList<NotificationButton> = mutableListOf()
             if (buttonsJsonString != null) {
@@ -38,6 +41,7 @@ data class NotificationContent(
             return NotificationContent(
                 title = title,
                 text = text,
+                largeIconPath = largeIconPath,
                 icon = icon,
                 buttons = buttons
             )
@@ -49,6 +53,7 @@ data class NotificationContent(
 
             val title = map?.get(PrefsKey.NOTIFICATION_CONTENT_TITLE) as? String ?: ""
             val text = map?.get(PrefsKey.NOTIFICATION_CONTENT_TEXT) as? String ?: ""
+            val largeIconPath = map?.get(PrefsKey.NOTIFICATION_LARGE_ICON_PATH) as? String ?: ""
 
             val iconJson = map?.get(PrefsKey.NOTIFICATION_CONTENT_ICON) as? Map<*, *>
             var iconJsonString: String? = null
@@ -65,6 +70,7 @@ data class NotificationContent(
             with(prefs.edit()) {
                 putString(PrefsKey.NOTIFICATION_CONTENT_TITLE, title)
                 putString(PrefsKey.NOTIFICATION_CONTENT_TEXT, text)
+                putString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, largeIconPath)
                 putString(PrefsKey.NOTIFICATION_CONTENT_ICON, iconJsonString)
                 putString(PrefsKey.NOTIFICATION_CONTENT_BUTTONS, buttonsJsonString)
                 commit()
@@ -77,6 +83,7 @@ data class NotificationContent(
 
             val title = map?.get(PrefsKey.NOTIFICATION_CONTENT_TITLE) as? String
             val text = map?.get(PrefsKey.NOTIFICATION_CONTENT_TEXT) as? String
+            val largeIconPath = map?.get(PrefsKey.NOTIFICATION_LARGE_ICON_PATH) as? String ?: ""
 
             val iconJson = map?.get(PrefsKey.NOTIFICATION_CONTENT_ICON) as? Map<*, *>
             var iconJsonString: String? = null
@@ -93,6 +100,7 @@ data class NotificationContent(
             with(prefs.edit()) {
                 title?.let { putString(PrefsKey.NOTIFICATION_CONTENT_TITLE, it) }
                 text?.let { putString(PrefsKey.NOTIFICATION_CONTENT_TEXT, it) }
+                largeIconPath?.let { putString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, it) }
                 iconJsonString?.let { putString(PrefsKey.NOTIFICATION_CONTENT_ICON, it) }
                 buttonsJsonString?.let { putString(PrefsKey.NOTIFICATION_CONTENT_BUTTONS, it) }
                 commit()
