@@ -269,16 +269,15 @@ class ForegroundService : Service() {
 
         val nm = getSystemService(NotificationManager::class.java)
         if (nm.getNotificationChannel(channelId) == null) {
-            val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
-                if (channelDesc != null) {
-                    description = channelDesc
-                }
-                enableVibration(notificationOptions.enableVibration)
-                if (!notificationOptions.playSound) {
-                    setSound(null, null)
-                }
-                setShowBadge(notificationOptions.showBadge)
+            val channel = NotificationChannel(channelId, channelName, channelImportance)
+            if (channelDesc != null) {
+                channel.description = channelDesc
             }
+            channel.enableVibration(notificationOptions.enableVibration)
+            if (!notificationOptions.playSound) {
+                channel.setSound(null, null)
+            }
+            channel.setShowBadge(notificationOptions.showBadge)
             nm.createNotificationChannel(channel)
         }
     }
