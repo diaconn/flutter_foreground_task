@@ -240,7 +240,7 @@ class ForegroundService : Service() {
 
         /* 디아콘 추가 시작 */
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notification.flags |= Notification.FLAG_ONGOING_EVENT // 지우기 버튼 눌렀을 때 지워지지 않게
+            notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT // 지우기 버튼 눌렀을 때 지워지지 않게
         }
         /* 디아콘 추가 끝 */
 
@@ -390,8 +390,8 @@ class ForegroundService : Service() {
         val notification = createNotification()
 
         /* 디아콘 추가 시작 */
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notification.flags |= Notification.FLAG_ONGOING_EVENT // 지우기 버튼 눌렀을 때 지워지지 않게
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT // 지우기 버튼 눌렀을 때 지워지지 않게
         }
         /* 디아콘 추가 끝 */
 
