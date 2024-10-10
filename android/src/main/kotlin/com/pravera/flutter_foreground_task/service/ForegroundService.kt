@@ -238,12 +238,6 @@ class ForegroundService : Service() {
         val serviceId = notificationOptions.serviceId
         val notification = createNotification()
 
-        /* 디아콘 추가 시작 */
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT // 지우기 버튼 눌렀을 때 지워지지 않게
-        }
-        /* 디아콘 추가 끝 */
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
                 serviceId,
@@ -388,12 +382,6 @@ class ForegroundService : Service() {
     private fun updateNotification() {
         val serviceId = notificationOptions.serviceId
         val notification = createNotification()
-
-        /* 디아콘 추가 시작 */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT // 지우기 버튼 눌렀을 때 지워지지 않게
-        }
-        /* 디아콘 추가 끝 */
 
         val nm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getSystemService(NotificationManager::class.java)
