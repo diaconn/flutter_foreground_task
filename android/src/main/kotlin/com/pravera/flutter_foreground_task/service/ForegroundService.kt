@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.*
+/* 디아콘 추가 시작 */
+import android.graphics.BitmapFactory
+/* 디아콘 추가 끝 */
 
 /**
  * A service class for implementing foreground service.
@@ -285,7 +288,7 @@ class ForegroundService : Service() {
         val channelImportance = notificationOptions.channelImportance
 
         val nm = getSystemService(NotificationManager::class.java)
-        if (nm.getNotificationChannel(channelId) == null) {
+        /*if (nm.getNotificationChannel(channelId) == null) {
             val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
                 if (channelDesc != null) {
                     description = channelDesc
@@ -297,7 +300,19 @@ class ForegroundService : Service() {
                 setShowBadge(notificationOptions.showBadge)
             }
             nm.createNotificationChannel(channel)
+        }*/
+        /* 디아콘 추가 시작 */
+        val channel = NotificationChannel(channelId, channelName, channelImportance)
+        if (channelDesc != null) {
+            channel.description = channelDesc
         }
+        channel.enableVibration(notificationOptions.enableVibration)
+        if (!notificationOptions.playSound) {
+            channel.setSound(null, null)
+        }
+        channel.setShowBadge(notificationOptions.showBadge)
+        nm.createNotificationChannel(channel)
+        /* 디아콘 추가 끝 */
     }
 
     private fun createNotification(): Notification {
@@ -337,6 +352,11 @@ class ForegroundService : Service() {
             builder.setContentIntent(contentIntent)
             builder.setContentTitle(notificationContent.title)
             builder.setContentText(notificationContent.text)
+            /* 디아콘 추가 시작 */
+            if (notificationContent.largeIconPath.isNotEmpty()) {
+                builder.setLargeIcon(BitmapFactory.decodeFile(notificationContent.largeIconPath))
+            }
+            /* 디아콘 추가 끝 */
             builder.style = Notification.BigTextStyle()
             builder.setVisibility(notificationOptions.visibility)
             builder.setOnlyAlertOnce(notificationOptions.onlyAlertOnce)
@@ -364,6 +384,11 @@ class ForegroundService : Service() {
             builder.setContentIntent(contentIntent)
             builder.setContentTitle(notificationContent.title)
             builder.setContentText(notificationContent.text)
+            /* 디아콘 추가 시작 */
+            if (notificationContent.largeIconPath.isNotEmpty()) {
+                builder.setLargeIcon(BitmapFactory.decodeFile(notificationContent.largeIconPath))
+            }
+            /* 디아콘 추가 끝 */
             builder.setStyle(NotificationCompat.BigTextStyle().bigText(notificationContent.text))
             builder.setVisibility(notificationOptions.visibility)
             builder.setOnlyAlertOnce(notificationOptions.onlyAlertOnce)

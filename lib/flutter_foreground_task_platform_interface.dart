@@ -39,6 +39,9 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
     int? serviceId,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIcon? notificationIcon,
     List<NotificationButton>? notificationButtons,
     String? notificationInitialRoute,
@@ -55,6 +58,9 @@ abstract class FlutterForegroundTaskPlatform extends PlatformInterface {
     ForegroundTaskOptions? foregroundTaskOptions,
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIcon? notificationIcon,
     List<NotificationButton>? notificationButtons,
     String? notificationInitialRoute,

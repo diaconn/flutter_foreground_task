@@ -38,6 +38,9 @@ object PreferencesKey {
     const val NOTIFICATION_CONTENT_ICON = "icon"
     const val NOTIFICATION_CONTENT_BUTTONS = "buttons"
     const val NOTIFICATION_INITIAL_ROUTE = "initialRoute"
+    /* 디아콘 추가 시작 */
+    const val NOTIFICATION_LARGE_ICON_PATH = "notificationLargeIconPath"
+    /* 디아콘 추가 끝 */
 
     // task options
     const val FOREGROUND_TASK_OPTIONS_PREFS = prefix + "FOREGROUND_TASK_OPTIONS"

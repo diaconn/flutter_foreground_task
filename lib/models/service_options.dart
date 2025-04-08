@@ -15,6 +15,9 @@ class ServiceStartOptions {
     required this.foregroundTaskOptions,
     required this.notificationContentTitle,
     required this.notificationContentText,
+    /* 디아콘 추가 시작 */
+    this.notificationLargeIconPath,
+    /* 디아콘 추가 끝 */
     this.notificationIcon,
     this.notificationButtons,
     this.notificationInitialRoute,
@@ -27,6 +30,9 @@ class ServiceStartOptions {
   final ForegroundTaskOptions foregroundTaskOptions;
   final String notificationContentTitle;
   final String notificationContentText;
+  /* 디아콘 추가 시작 */
+  final String? notificationLargeIconPath;
+  /* 디아콘 추가 끝 */
   final NotificationIcon? notificationIcon;
   final List<NotificationButton>? notificationButtons;
   final String? notificationInitialRoute;
@@ -38,6 +44,9 @@ class ServiceStartOptions {
       ...foregroundTaskOptions.toJson(),
       'notificationContentTitle': notificationContentTitle,
       'notificationContentText': notificationContentText,
+      /* 디아콘 추가 시작 */
+      'notificationLargeIconPath': notificationLargeIconPath,
+      /* 디아콘 추가 끝 */
       'icon': notificationIcon?.toJson(),
       'buttons': notificationButtons?.map((e) => e.toJson()).toList(),
       'initialRoute': notificationInitialRoute,
@@ -63,6 +72,9 @@ class ServiceUpdateOptions {
     required this.foregroundTaskOptions,
     required this.notificationContentTitle,
     required this.notificationContentText,
+    /* 디아콘 추가 시작 */
+    this.notificationLargeIconPath,
+    /* 디아콘 추가 끝 */
     this.notificationIcon,
     this.notificationButtons,
     this.notificationInitialRoute,
@@ -72,6 +84,9 @@ class ServiceUpdateOptions {
   final ForegroundTaskOptions? foregroundTaskOptions;
   final String? notificationContentTitle;
   final String? notificationContentText;
+  /* 디아콘 추가 시작 */
+  final String? notificationLargeIconPath;
+  /* 디아콘 추가 끝 */
   final NotificationIcon? notificationIcon;
   final List<NotificationButton>? notificationButtons;
   final String? notificationInitialRoute;
@@ -81,6 +96,9 @@ class ServiceUpdateOptions {
     final Map<String, dynamic> json = {
       'notificationContentTitle': notificationContentTitle,
       'notificationContentText': notificationContentText,
+      /* 디아콘 추가 시작 */
+      'notificationLargeIconPath': notificationLargeIconPath,
+      /* 디아콘 추가 끝 */
       'icon': notificationIcon?.toJson(),
       'buttons': notificationButtons?.map((e) => e.toJson()).toList(),
       'initialRoute': notificationInitialRoute,
