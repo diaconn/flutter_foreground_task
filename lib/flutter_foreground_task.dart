@@ -101,6 +101,9 @@ class FlutterForegroundTask {
     List<ForegroundServiceTypes>? serviceTypes,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIcon? notificationIcon,
     List<NotificationButton>? notificationButtons,
     String? notificationInitialRoute,
@@ -123,6 +126,9 @@ class FlutterForegroundTask {
         serviceTypes: serviceTypes,
         notificationTitle: notificationTitle,
         notificationText: notificationText,
+        /* 디아콘 추가 시작 */
+        largeIconPath: largeIconPath,
+        /* 디아콘 추가 끝 */
         notificationIcon: notificationIcon,
         notificationButtons: notificationButtons,
         notificationInitialRoute: notificationInitialRoute,
@@ -159,6 +165,9 @@ class FlutterForegroundTask {
     ForegroundTaskOptions? foregroundTaskOptions,
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIcon? notificationIcon,
     List<NotificationButton>? notificationButtons,
     String? notificationInitialRoute,
@@ -173,6 +182,9 @@ class FlutterForegroundTask {
         foregroundTaskOptions: foregroundTaskOptions,
         notificationText: notificationText,
         notificationTitle: notificationTitle,
+        /* 디아콘 추가 시작 */
+        largeIconPath: largeIconPath,
+        /* 디아콘 추가 끝 */
         notificationIcon: notificationIcon,
         notificationButtons: notificationButtons,
         notificationInitialRoute: notificationInitialRoute,

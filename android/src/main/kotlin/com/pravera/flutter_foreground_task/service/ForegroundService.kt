@@ -22,6 +22,11 @@ import com.pravera.flutter_foreground_task.PreferencesKey as PrefsKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+/* 디아콘 추가 시작 */
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import java.io.File
+/* 디아콘 추가 끝 */
 
 /**
  * A service class for implementing foreground service.
@@ -88,6 +93,12 @@ class ForegroundService : Service() {
     private var prevForegroundTaskData: ForegroundTaskData? = null
     private var prevNotificationOptions: NotificationOptions? = null
     private var prevNotificationContent: NotificationContent? = null
+
+    /* 디아콘 추가 시작 */
+    // 노티 갱신마다 decodeFile 반복 방지용 캐시 (경로 또는 파일 내용이 바뀔 때만 다시 디코딩)
+    private var cachedLargeIcon: Bitmap? = null
+    private var cachedLargeIconKey: String? = null
+    /* 디아콘 추가 끝 */
 
     private var wakeLock: PowerManager.WakeLock? = null
     private var wifiLock: WifiManager.WifiLock? = null
@@ -309,20 +320,31 @@ class ForegroundService : Service() {
         val channelImportance = notificationOptions.channelImportance
 
         val nm = getSystemService(NotificationManager::class.java)
-        if (nm.getNotificationChannel(channelId) == null) {
-            val channel = NotificationChannel(channelId, channelName, channelImportance).apply {
-                if (channelDesc != null) {
-                    description = channelDesc
-                }
-                enableVibration(notificationOptions.enableVibration)
-                if (!notificationOptions.playSound) {
-                    setSound(null, null)
-                }
-                setShowBadge(notificationOptions.showBadge)
-            }
-            nm.createNotificationChannel(channel)
+        /* 디아콘 추가 시작 */
+        val channel = NotificationChannel(channelId, channelName, channelImportance)
+        if (channelDesc != null) {
+            channel.description = channelDesc
         }
+        channel.enableVibration(notificationOptions.enableVibration)
+        if (!notificationOptions.playSound) {
+            channel.setSound(null, null)
+        }
+        channel.setShowBadge(notificationOptions.showBadge)
+        nm.createNotificationChannel(channel)
+        /* 디아콘 추가 끝 */
     }
+
+    /* 디아콘 추가 시작 */
+    private fun getLargeIcon(path: String): Bitmap? {
+        // mtime을 키에 포함: 같은 경로에 파일을 덮어쓰거나 늦게 생성돼도 다시 디코딩됨
+        val key = "$path:${File(path).lastModified()}"
+        if (key != cachedLargeIconKey) {
+            cachedLargeIcon = BitmapFactory.decodeFile(path)
+            cachedLargeIconKey = key
+        }
+        return cachedLargeIcon
+    }
+    /* 디아콘 추가 끝 */
 
     private fun createNotification(): Notification {
         // notification icon
@@ -361,6 +383,11 @@ class ForegroundService : Service() {
             builder.setContentIntent(contentIntent)
             builder.setContentTitle(notificationContent.title)
             builder.setContentText(notificationContent.text)
+            /* 디아콘 추가 시작 */
+            if (notificationContent.largeIconPath.isNotEmpty()) {
+                getLargeIcon(notificationContent.largeIconPath)?.let { builder.setLargeIcon(it) }
+            }
+            /* 디아콘 추가 끝 */
             builder.style = Notification.BigTextStyle()
             builder.setVisibility(notificationOptions.visibility)
             builder.setOnlyAlertOnce(notificationOptions.onlyAlertOnce)
@@ -388,6 +415,11 @@ class ForegroundService : Service() {
             builder.setContentIntent(contentIntent)
             builder.setContentTitle(notificationContent.title)
             builder.setContentText(notificationContent.text)
+            /* 디아콘 추가 시작 */
+            if (notificationContent.largeIconPath.isNotEmpty()) {
+                getLargeIcon(notificationContent.largeIconPath)?.let { builder.setLargeIcon(it) }
+            }
+            /* 디아콘 추가 끝 */
             builder.setStyle(NotificationCompat.BigTextStyle().bigText(notificationContent.text))
             builder.setVisibility(notificationOptions.visibility)
             builder.setOnlyAlertOnce(notificationOptions.onlyAlertOnce)

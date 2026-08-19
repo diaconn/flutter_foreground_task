@@ -41,6 +41,9 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
     List<ForegroundServiceTypes>? serviceTypes,
     required String notificationTitle,
     required String notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIcon? notificationIcon,
     List<NotificationButton>? notificationButtons,
     String? notificationInitialRoute,
@@ -54,6 +57,9 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
       foregroundTaskOptions: foregroundTaskOptions,
       notificationContentTitle: notificationTitle,
       notificationContentText: notificationText,
+      /* 디아콘 추가 시작 */
+      notificationLargeIconPath: largeIconPath,
+      /* 디아콘 추가 끝 */
       notificationIcon: notificationIcon,
       notificationButtons: notificationButtons,
       notificationInitialRoute: notificationInitialRoute,
@@ -73,6 +79,9 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
     ForegroundTaskOptions? foregroundTaskOptions,
     String? notificationTitle,
     String? notificationText,
+    /* 디아콘 추가 시작 */
+    String? largeIconPath,
+    /* 디아콘 추가 끝 */
     NotificationIcon? notificationIcon,
     List<NotificationButton>? notificationButtons,
     String? notificationInitialRoute,
@@ -82,6 +91,9 @@ class MethodChannelFlutterForegroundTask extends FlutterForegroundTaskPlatform {
       foregroundTaskOptions: foregroundTaskOptions,
       notificationContentTitle: notificationTitle,
       notificationContentText: notificationText,
+      /* 디아콘 추가 시작 */
+      notificationLargeIconPath: largeIconPath,
+      /* 디아콘 추가 끝 */
       notificationIcon: notificationIcon,
       notificationButtons: notificationButtons,
       notificationInitialRoute: notificationInitialRoute,

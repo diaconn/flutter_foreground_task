@@ -8,6 +8,9 @@ import org.json.JSONObject
 data class NotificationContent(
         val title: String,
         val text: String,
+        /* 디아콘 추가 시작 */
+        val largeIconPath: String,
+        /* 디아콘 추가 끝 */
         val icon: NotificationIcon?,
         val buttons: List<NotificationButton>,
         val initialRoute: String?
@@ -19,6 +22,9 @@ data class NotificationContent(
 
             val title = prefs.getString(PrefsKey.NOTIFICATION_CONTENT_TITLE, null) ?: ""
             val text = prefs.getString(PrefsKey.NOTIFICATION_CONTENT_TEXT, null) ?: ""
+            /* 디아콘 추가 시작 */
+            val largeIconPath = prefs.getString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, null) ?: ""
+            /* 디아콘 추가 끝 */
 
             val iconJsonString = prefs.getString(PrefsKey.NOTIFICATION_CONTENT_ICON, null)
             var icon: NotificationIcon? = null
@@ -41,6 +47,9 @@ data class NotificationContent(
             return NotificationContent(
                 title = title,
                 text = text,
+                /* 디아콘 추가 시작 */
+                largeIconPath = largeIconPath,
+                /* 디아콘 추가 끝 */
                 icon = icon,
                 buttons = buttons,
                 initialRoute = initialRoute
@@ -53,6 +62,9 @@ data class NotificationContent(
 
             val title = map?.get(PrefsKey.NOTIFICATION_CONTENT_TITLE) as? String ?: ""
             val text = map?.get(PrefsKey.NOTIFICATION_CONTENT_TEXT) as? String ?: ""
+            /* 디아콘 추가 시작 */
+            val largeIconPath = map?.get(PrefsKey.NOTIFICATION_LARGE_ICON_PATH) as? String ?: ""
+            /* 디아콘 추가 끝 */
 
             val iconJson = map?.get(PrefsKey.NOTIFICATION_CONTENT_ICON) as? Map<*, *>
             var iconJsonString: String? = null
@@ -71,6 +83,9 @@ data class NotificationContent(
             with(prefs.edit()) {
                 putString(PrefsKey.NOTIFICATION_CONTENT_TITLE, title)
                 putString(PrefsKey.NOTIFICATION_CONTENT_TEXT, text)
+                /* 디아콘 추가 시작 */
+                putString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, largeIconPath)
+                /* 디아콘 추가 끝 */
                 putString(PrefsKey.NOTIFICATION_CONTENT_ICON, iconJsonString)
                 putString(PrefsKey.NOTIFICATION_CONTENT_BUTTONS, buttonsJsonString)
                 putString(PrefsKey.NOTIFICATION_INITIAL_ROUTE, initialRoute)
@@ -84,6 +99,9 @@ data class NotificationContent(
 
             val title = map?.get(PrefsKey.NOTIFICATION_CONTENT_TITLE) as? String
             val text = map?.get(PrefsKey.NOTIFICATION_CONTENT_TEXT) as? String
+            /* 디아콘 추가 시작 */
+            val largeIconPath = map?.get(PrefsKey.NOTIFICATION_LARGE_ICON_PATH) as? String
+            /* 디아콘 추가 끝 */
 
             val iconJson = map?.get(PrefsKey.NOTIFICATION_CONTENT_ICON) as? Map<*, *>
             var iconJsonString: String? = null
@@ -102,6 +120,9 @@ data class NotificationContent(
             with(prefs.edit()) {
                 title?.let { putString(PrefsKey.NOTIFICATION_CONTENT_TITLE, it) }
                 text?.let { putString(PrefsKey.NOTIFICATION_CONTENT_TEXT, it) }
+                /* 디아콘 추가 시작 */
+                largeIconPath?.let { putString(PrefsKey.NOTIFICATION_LARGE_ICON_PATH, it) }
+                /* 디아콘 추가 끝 */
                 iconJsonString?.let { putString(PrefsKey.NOTIFICATION_CONTENT_ICON, it) }
                 buttonsJsonString?.let { putString(PrefsKey.NOTIFICATION_CONTENT_BUTTONS, it) }
                 initialRoute?.let { putString(PrefsKey.NOTIFICATION_INITIAL_ROUTE, it) }
